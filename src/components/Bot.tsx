@@ -36,6 +36,7 @@ import { removeLocalStorageChatHistory, getLocalStorageChatflow, setLocalStorage
 import { cloneDeep } from 'lodash';
 import { FollowUpPromptBubble } from '@/components/bubbles/FollowUpPromptBubble';
 import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
+import { Gallery, GalleryPerson } from './widgets/gallery';
 
 export type FileEvent<T = EventTarget> = {
   target: T;
@@ -153,6 +154,7 @@ export type BotProps = {
   disclaimer?: DisclaimerPopUpTheme;
   dateTimeToggle?: DateTimeToggleTheme;
   renderHTML?: boolean;
+  galleryPeople?: GalleryPerson[];
 };
 
 export type LeadsConfig = {
@@ -1427,6 +1429,10 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             ref={chatContainer}
             class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[70px] relative scrollable-container chatbot-chat-view scroll-smooth"
           >
+            <Show when={true}>
+              <Gallery people={props.galleryPeople!} />
+            </Show>
+
             <For each={[...messages()]}>
               {(message, index) => {
                 return (
@@ -1640,3 +1646,5 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     </>
   );
 };
+
+

@@ -1,6 +1,7 @@
 import { FeedbackRatingType } from '@/queries/sendMessageQuery';
 import { BotMessageTheme, FooterTheme, TextInputTheme, UserMessageTheme, FeedbackTheme, DisclaimerPopUpTheme, DateTimeToggleTheme } from '@/features/bubble/types';
 import { FilePreview } from '@/components/inputs/textInput/components/FilePreview';
+import { GalleryPerson } from './widgets/gallery';
 export type FileEvent<T = EventTarget> = {
     target: T;
 };
@@ -100,6 +101,7 @@ export type BotProps = {
     disclaimer?: DisclaimerPopUpTheme;
     dateTimeToggle?: DateTimeToggleTheme;
     renderHTML?: boolean;
+    galleryPeople?: GalleryPerson[];
 };
 export type LeadsConfig = {
     status: boolean;
