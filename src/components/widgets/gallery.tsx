@@ -15,23 +15,23 @@ type GalleryProps = {
 // Default gallery people for debugging
 const defaultPeople: GalleryPerson[] = [
   {
-    name: "Mathilda Spark",
-    email: "mathilda@suisse-trombone.com",
-    photoUrl: "https://i.pravatar.cc/300",
-    role: "CEO"
+    name: 'Mathilda Spark',
+    email: 'mathilda@suisse-trombone.com',
+    photoUrl: 'https://i.pravatar.cc/300',
+    role: 'CEO',
   },
   {
-    name: "James Gosper",
-    email: "james@suisse-trombone.com",
-    photoUrl: "https://i.pravatar.cc/301",
-    role: "CTO"
+    name: 'James Gosper',
+    email: 'james@suisse-trombone.com',
+    photoUrl: 'https://i.pravatar.cc/301',
+    role: 'CTO',
   },
   {
-    name: "Geralt Berry",
-    email: "geralt@suisse-trombone.com",
-    photoUrl: "https://i.pravatar.cc/302",
-    role: "Customer Support"
-  }
+    name: 'Geralt Berry',
+    email: 'geralt@suisse-trombone.com',
+    photoUrl: 'https://i.pravatar.cc/302',
+    role: 'Customer Support',
+  },
 ];
 
 export const Gallery: Component<GalleryProps> = (props) => {
@@ -47,19 +47,18 @@ export const Gallery: Component<GalleryProps> = (props) => {
       <div class="flex gap-2 relative w-full max-w-6xl mx-auto">
         <For each={people()}>
           {(person, index) => (
-            <div 
+            <div
               class={`relative transition-all duration-300 flex-1 min-w-0
                 ${index() === 0 ? 'origin-left' : index() === people().length - 1 ? 'origin-right' : 'origin-center'}
               `}
               style={{
-                transform: hoveredIndex() === index() ? 
-                  `translateX(${index() === 0 ? '10%' : index() === people().length - 1 ? '-10%' : '0'})` : 
-                  'none',
-                'z-index': hoveredIndex() === index() ? 20 : 10 - index()
+                transform:
+                  hoveredIndex() === index() ? `translateX(${index() === 0 ? '10%' : index() === people().length - 1 ? '-10%' : '0'})` : 'none',
+                'z-index': hoveredIndex() === index() ? 20 : 10 - index(),
               }}
             >
-              <GalleryItem 
-                person={person} 
+              <GalleryItem
+                person={person}
                 onContact={handleContact}
                 isHovered={hoveredIndex() === index()}
                 onHover={() => setHoveredIndex(index())}
