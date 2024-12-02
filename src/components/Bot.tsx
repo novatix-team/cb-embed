@@ -1489,7 +1489,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                           dateTimeToggle={props.dateTimeToggle}
                           renderHTML={props.renderHTML}
                         />
-                        <Show when={message.usedTools?.some((tool) => tool.name === 'gallery_tool' && tool.toolOutput)}>
+                        <Show when={message.usedTools?.some((tool) => tool.tool === 'gallery_tool' && tool.toolOutput)}>
                           <Gallery
                             people={(() => {
                               try {
