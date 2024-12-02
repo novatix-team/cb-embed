@@ -1475,7 +1475,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                           renderHTML={props.renderHTML}
                         />
                         <Show when={message.usedTools?.some((tool) => tool.name === 'gallery_tool')}>
-                          <Gallery people={props.galleryPeople!} />
+                          <Gallery people={JSON.parse(message.usedTools?.find((tool) => tool.name === 'gallery_tool')?.toolOutput as string)} />
                         </Show>
                       </>
                     )}
