@@ -1431,7 +1431,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
           >
             <For each={[...messages()]}>
               {(message, index) => {
-                console.log('message usedTools:   ', message.usedTools);
+                console.log('message usedTools2:   ', message.usedTools);
                 return (
                   <>
                     {message.type === 'userMessage' && (
