@@ -1360,10 +1360,13 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
   createEffect(() => {
     const messagesArray = messages();
     const lastMessage = messagesArray[messagesArray.length - 1];
-    
+
     if (lastMessage?.type === 'apiMessage') {
-      console.log('Last message tools:', lastMessage?.usedTools);
-      console.log('Has gallery tool condition:', lastMessage?.usedTools?.some((tool) => tool.name === 'gallery_tool'));
+      // Log all tools used
+      console.log('All tools used:', lastMessage?.usedTools?.map(tool => tool.name));
+      
+      // Log gallery tool condition
+      console.log('Has gallery tool:', lastMessage?.usedTools?.some((tool) => tool.name === 'gallery_tool'));
     }
   });
 
@@ -1484,16 +1487,12 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                           dateTimeToggle={props.dateTimeToggle}
                           renderHTML={props.renderHTML}
                         />
-                        <Show 
-                          when={message.usedTools?.some((tool) => 
-                            tool.name === 'gallery_tool' && tool.toolOutput
-                          )}
-                        >
-                          <Gallery 
+                        <Show when={message.usedTools?.some((tool) => tool.name === 'gallery_tool' && tool.toolOutput)}>
+                          <Gallery
                             people={(() => {
                               try {
-                                const galleryTool = message.usedTools?.find(tool => tool.name === 'gallery_tool');
-                                console.log("Going in the gallery")
+                                const galleryTool = message.usedTools?.find((tool) => tool.name === 'gallery_tool');
+                                console.log('Going in the gallery');
                                 return JSON.parse(galleryTool?.toolOutput || '[]');
                               } catch (error) {
                                 console.error('Failed to parse gallery tool output:', error);
