@@ -15,19 +15,19 @@ type GalleryProps = {
 // Default gallery people for debugging
 const defaultPeople: GalleryPerson[] = [
   {
-    name: 'Mathilda Spark',
+    name: 'Mathilda Spark 2',
     email: 'mathilda@suisse-trombone.com',
     photoUrl: 'https://i.pravatar.cc/300',
     role: 'CEO',
   },
   {
-    name: 'James Gosper',
+    name: 'James Gosper 2',
     email: 'james@suisse-trombone.com',
     photoUrl: 'https://i.pravatar.cc/301',
     role: 'CTO',
   },
   {
-    name: 'Geralt Berry',
+    name: 'Geralt Berry 2',
     email: 'geralt@suisse-trombone.com',
     photoUrl: 'https://i.pravatar.cc/302',
     role: 'Customer Support',
