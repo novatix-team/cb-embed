@@ -33,7 +33,7 @@ import { CancelButton } from './buttons/CancelButton';
 import { cancelAudioRecording, startAudioRecording, stopAudioRecording } from '@/utils/audioRecording';
 import { LeadCaptureBubble } from '@/components/bubbles/LeadCaptureBubble';
 import { removeLocalStorageChatHistory, getLocalStorageChatflow, setLocalStorageChatflow, setCookie, getCookie } from '@/utils';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, each } from 'lodash';
 import { FollowUpPromptBubble } from '@/components/bubbles/FollowUpPromptBubble';
 import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
 import { Gallery, GalleryPerson } from './widgets/gallery';
@@ -1357,6 +1357,10 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     }
   };
 
+  const lastMessage = messages()[messages().length - 1];
+  console.log("Last message tools:", lastMessage?.usedTools);
+  console.log("Has gallery tool condition:", lastMessage?.usedTools?.some(tool => tool.name === 'gallery_tool'));
+
   return (
     <>
       <div
@@ -1431,7 +1435,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
           >
             <For each={[...messages()]}>
               {(message, index) => {
-                console.log('message usedTools23:   ', message.usedTools);
+                console.log('message usedTools234:   ', message.usedTools);
                 return (
                   <>
                     {message.type === 'userMessage' && (
