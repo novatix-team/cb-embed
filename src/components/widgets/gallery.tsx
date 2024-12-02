@@ -15,19 +15,19 @@ type GalleryProps = {
 // Default gallery people for debugging
 const defaultPeople: GalleryPerson[] = [
   {
-    name: 'Mathilda Spark 2',
+    name: 'Mathilda Spark 3 def',
     email: 'mathilda@suisse-trombone.com',
     photoUrl: 'https://i.pravatar.cc/300',
     role: 'CEO',
   },
   {
-    name: 'James Gosper 2',
+    name: 'James Gosper 3 def',
     email: 'james@suisse-trombone.com',
     photoUrl: 'https://i.pravatar.cc/301',
     role: 'CTO',
   },
   {
-    name: 'Geralt Berry 2',
+    name: 'Geralt Berry 3 def',
     email: 'geralt@suisse-trombone.com',
     photoUrl: 'https://i.pravatar.cc/302',
     role: 'Customer Support',
@@ -35,6 +35,7 @@ const defaultPeople: GalleryPerson[] = [
 ];
 
 export const Gallery: Component<GalleryProps> = (props) => {
+  console.log('props:   ', props.people);
   const people = () => props.people || defaultPeople;
   const [hoveredIndex, setHoveredIndex] = createSignal(1); // Center item focused by default
 
