@@ -1429,12 +1429,9 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             ref={chatContainer}
             class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[70px] relative scrollable-container chatbot-chat-view scroll-smooth"
           >
-            <Show when={true}>
-              <Gallery people={props.galleryPeople!} />
-            </Show>
-
             <For each={[...messages()]}>
               {(message, index) => {
+                console.log('message usedTools:   ', message.usedTools);
                 return (
                   <>
                     {message.type === 'userMessage' && (
@@ -1475,7 +1472,11 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                         }}
                         dateTimeToggle={props.dateTimeToggle}
                         renderHTML={props.renderHTML}
-                      />
+                      >
+                        <Show when={message.usedTools?.some(tool => tool.name === 'gallery_tool')}>
+                          <Gallery people={props.galleryPeople!} />
+                        </Show>
+                      </BotBubble>
                     )}
                     {message.type === 'leadCaptureMessage' && leadsConfig()?.status && !getLocalStorageChatflow(props.chatflowid)?.lead && (
                       <LeadCaptureBubble

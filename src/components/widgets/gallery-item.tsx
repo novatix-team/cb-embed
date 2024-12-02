@@ -9,12 +9,18 @@ type GalleryItemProps = {
 };
 
 export const GalleryItem: Component<GalleryItemProps> = (props) => {
+  const handleClick = () => {
+    const mailtoUrl = `mailto:${props.person.email}?subject=Hello ${props.person.name}&body=Hi ${props.person.name},%0D%0A%0D%0AI would like to get in touch with you.%0D%0A%0D%0ABest regards`;
+    window.location.href = mailtoUrl;
+  };
+
   return (
     <div
       class={`relative bg-white rounded-xl shadow-md overflow-hidden 
         transition-all duration-300 cursor-pointer group
         ${props.isHovered ? 'z-10 scale-[1.3] shadow-xl' : 'scale-95 opacity-50 hover:opacity-75'}`}
       onMouseEnter={props.onHover}
+      onClick={handleClick}
     >
       <div class="aspect-[4/3]">
         <img src={props.person.photoUrl} alt={props.person.name} class="w-full h-full object-cover" />
