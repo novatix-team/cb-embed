@@ -1473,7 +1473,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                         dateTimeToggle={props.dateTimeToggle}
                         renderHTML={props.renderHTML}
                       >
-                        <Show when={message.usedTools?.some(tool => tool.name === 'gallery_tool')}>
+                        <Show when={message.usedTools?.some((tool) => tool.name === 'gallery_tool')}>
                           <Gallery people={props.galleryPeople!} />
                         </Show>
                       </BotBubble>
