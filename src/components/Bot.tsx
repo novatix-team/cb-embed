@@ -1449,34 +1449,35 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                       />
                     )}
                     {message.type === 'apiMessage' && (
-                      <BotBubble
-                        message={message}
-                        fileAnnotations={message.fileAnnotations}
-                        chatflowid={props.chatflowid}
-                        chatId={chatId()}
-                        apiHost={props.apiHost}
-                        backgroundColor={props.botMessage?.backgroundColor}
-                        textColor={props.botMessage?.textColor}
-                        feedbackColor={props.feedback?.color}
-                        showAvatar={props.botMessage?.showAvatar}
-                        avatarSrc={props.botMessage?.avatarSrc}
-                        chatFeedbackStatus={chatFeedbackStatus()}
-                        fontSize={props.fontSize}
-                        isLoading={loading() && index() === messages().length - 1}
-                        showAgentMessages={props.showAgentMessages}
-                        handleActionClick={(label, action) => handleActionClick(label, action)}
-                        sourceDocsTitle={props.sourceDocsTitle}
-                        handleSourceDocumentsClick={(sourceDocuments) => {
-                          setSourcePopupSrc(sourceDocuments);
-                          setSourcePopupOpen(true);
-                        }}
-                        dateTimeToggle={props.dateTimeToggle}
-                        renderHTML={props.renderHTML}
-                      >
-                        <Show when={message.usedTools?.some((tool) => tool.name === 'gallery_tool')}>
+                      <>
+                        <BotBubble
+                          message={message}
+                          fileAnnotations={message.fileAnnotations}
+                          chatflowid={props.chatflowid}
+                          chatId={chatId()}
+                          apiHost={props.apiHost}
+                          backgroundColor={props.botMessage?.backgroundColor}
+                          textColor={props.botMessage?.textColor}
+                          feedbackColor={props.feedback?.color}
+                          showAvatar={props.botMessage?.showAvatar}
+                          avatarSrc={props.botMessage?.avatarSrc}
+                          chatFeedbackStatus={chatFeedbackStatus()}
+                          fontSize={props.fontSize}
+                          isLoading={loading() && index() === messages().length - 1}
+                          showAgentMessages={props.showAgentMessages}
+                          handleActionClick={(label, action) => handleActionClick(label, action)}
+                          sourceDocsTitle={props.sourceDocsTitle}
+                          handleSourceDocumentsClick={(sourceDocuments) => {
+                            setSourcePopupSrc(sourceDocuments);
+                            setSourcePopupOpen(true);
+                          }}
+                          dateTimeToggle={props.dateTimeToggle}
+                          renderHTML={props.renderHTML}
+                        />
+                        <Show when={message.usedTools?.some(tool => tool.name === 'gallery_tool')}>
                           <Gallery people={props.galleryPeople!} />
                         </Show>
-                      </BotBubble>
+                      </>
                     )}
                     {message.type === 'leadCaptureMessage' && leadsConfig()?.status && !getLocalStorageChatflow(props.chatflowid)?.lead && (
                       <LeadCaptureBubble
