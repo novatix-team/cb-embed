@@ -1358,8 +1358,8 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
   };
 
   const lastMessage = messages()[messages().length - 1];
-  console.log("Last message tools:", lastMessage?.usedTools);
-  console.log("Has gallery tool condition:", lastMessage?.usedTools?.some(tool => tool.name === 'gallery_tool'));
+  console.log('Last message tools:', lastMessage?.usedTools);
+  console.log('Has gallery tool condition:', lastMessage?.usedTools?.some((tool) => tool.name === 'gallery_tool'));
 
   return (
     <>
