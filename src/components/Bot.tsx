@@ -1363,10 +1363,12 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
 
     if (lastMessage?.type === 'apiMessage') {
       // Log all tools used
-      console.log('All tools used:', lastMessage?.usedTools?.map(tool => tool.name));
-      
+      console.log('All tools used:', lastMessage?.usedTools?.map((tool) => tool.tool));
+      console.log('Last message:', lastMessage.usedTools);
+
       // Log gallery tool condition
-      console.log('Has gallery tool:', lastMessage?.usedTools?.some((tool) => tool.name === 'gallery_tool'));
+      const hasGalleryTool = lastMessage?.usedTools?.[0]?.tool === 'gallery_tool';
+      console.log('Has gallery tool:', hasGalleryTool);
     }
   });
 
@@ -1491,7 +1493,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                           <Gallery
                             people={(() => {
                               try {
-                                const galleryTool = message.usedTools?.find((tool) => tool.name === 'gallery_tool');
+                                const galleryTool = message.usedTools?.find((tool) => tool.tool === 'gallery_tool');
                                 console.log('Going in the gallery');
                                 return JSON.parse(galleryTool?.toolOutput || '[]');
                               } catch (error) {
