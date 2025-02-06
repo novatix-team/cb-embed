@@ -1407,7 +1407,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             </For>
           </div>
         )}
-        
+
         {props.showTitle ? (
           <div
             class="flex flex-row items-center w-full h-[50px] absolute top-0 left-0 z-10"

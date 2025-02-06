@@ -26,18 +26,23 @@ export const Gallery: Component<GalleryProps> = (props) => {
   const person = () => props.person || defaultPerson;
 
   const handleClick = () => {
-    const mailtoUrl = `mailto:${person().email}?subject=Hello ${person().name}&body=Hi ${person().name},%0D%0A%0D%0AI would like to get in touch with you.%0D%0A%0D%0ABest regards`;
+    const mailtoUrl = `mailto:${person().email}?subject=Hello ${person().name}&body=Hi ${
+      person().name
+    },%0D%0A%0D%0AI would like to get in touch with you.%0D%0A%0D%0ABest regards`;
     window.location.href = mailtoUrl;
   };
 
   return (
     <div class="w-full flex justify-center items-center min-h-[300px] p-2">
-      <div class="flex bg-white rounded-xl shadow-md overflow-hidden max-w-3xl w-full hover:shadow-xl transition-all duration-300 cursor-pointer group" onClick={handleClick}>
+      <div
+        class="flex bg-white rounded-xl shadow-md overflow-hidden max-w-3xl w-full hover:shadow-xl transition-all duration-300 cursor-pointer group"
+        onClick={handleClick}
+      >
         {/* Left side - Image */}
         <div class="w-1/2">
           <img src={person().photoUrl} alt={person().name} class="w-full h-full object-cover" />
         </div>
-        
+
         {/* Right side - Content */}
         <div class="w-1/2 p-6 flex flex-col justify-center">
           <h3 class="text-3xl font-semibold text-gray-800">{person().name}</h3>
