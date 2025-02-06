@@ -1,5 +1,4 @@
-import { Component, For, createSignal } from 'solid-js';
-import { GalleryItem } from './gallery-item';
+import { Component } from 'solid-js';
 
 export type GalleryPerson = {
   name: string;
@@ -9,64 +8,51 @@ export type GalleryPerson = {
 };
 
 type GalleryProps = {
-  people?: GalleryPerson[];
+  people?: any[];
+  textInput?: {
+    sendButtonColor?: string;
+  };
 };
 
-// Default gallery people for debugging
-const defaultPeople: GalleryPerson[] = [
-  {
-    name: 'Mathilda Spark 3 def',
-    email: 'mathilda@suisse-trombone.com',
-    photoUrl: 'https://i.pravatar.cc/300',
-    role: 'CEO',
-  },
-  {
-    name: 'James Gosper 3 def',
-    email: 'james@suisse-trombone.com',
-    photoUrl: 'https://i.pravatar.cc/301',
-    role: 'CTO',
-  },
-  {
-    name: 'Geralt Berry 3 def',
-    email: 'geralt@suisse-trombone.com',
-    photoUrl: 'https://i.pravatar.cc/302',
-    role: 'Customer Support',
-  },
-];
+// Default person for debugging
+const defaultPerson: GalleryPerson = {
+  name: 'Stephanie Linner',
+  email: 'mathilda@suisse-trombone.com',
+  photoUrl: 'https://i.pravatar.cc/300',
+  role: 'Chairman of the board',
+};
 
 export const Gallery: Component<GalleryProps> = (props) => {
-  console.log('props:   ', props.people);
-  const people = () => props.people || defaultPeople;
-  const [hoveredIndex, setHoveredIndex] = createSignal(1); // Center item focused by default
+  const person = () => props.person || defaultPerson;
 
-  const handleContact = (email: string) => {
-    window.location.href = `mailto:${email}`;
+  const handleClick = () => {
+    const mailtoUrl = `mailto:${person().email}?subject=Hello ${person().name}&body=Hi ${person().name},%0D%0A%0D%0AI would like to get in touch with you.%0D%0A%0D%0ABest regards`;
+    window.location.href = mailtoUrl;
   };
 
   return (
-    <div class="w-full flex justify-center items-center min-h-[400px] p-4 overflow-hidden">
-      <div class="flex gap-2 relative w-full max-w-6xl mx-auto">
-        <For each={people()}>
-          {(person, index) => (
-            <div
-              class={`relative transition-all duration-300 flex-1 min-w-0
-                ${index() === 0 ? 'origin-left' : index() === people().length - 1 ? 'origin-right' : 'origin-center'}
-              `}
-              style={{
-                transform:
-                  hoveredIndex() === index() ? `translateX(${index() === 0 ? '10%' : index() === people().length - 1 ? '-10%' : '0'})` : 'none',
-                'z-index': hoveredIndex() === index() ? 20 : 10 - index(),
-              }}
-            >
-              <GalleryItem
-                person={person}
-                onContact={handleContact}
-                isHovered={hoveredIndex() === index()}
-                onHover={() => setHoveredIndex(index())}
-              />
-            </div>
-          )}
-        </For>
+    <div class="w-full flex justify-center items-center min-h-[300px] p-2">
+      <div class="flex bg-white rounded-xl shadow-md overflow-hidden max-w-3xl w-full hover:shadow-xl transition-all duration-300 cursor-pointer group" onClick={handleClick}>
+        {/* Left side - Image */}
+        <div class="w-1/2">
+          <img src={person().photoUrl} alt={person().name} class="w-full h-full object-cover" />
+        </div>
+        
+        {/* Right side - Content */}
+        <div class="w-1/2 p-6 flex flex-col justify-center">
+          <h3 class="text-3xl font-semibold text-gray-800">{person().name}</h3>
+          {person().role && <p class="text-lg text-gray-600 mt-2">{person().role}</p>}
+          <a
+            href={`mailto:${person().email}`}
+            class="mt-6 inline-flex items-center gap-2 p-3 text-white rounded-full transition-all duration-300 w-fit hover:brightness-90 active:brightness-75"
+            style={{ background: props.textInput?.sendButtonColor ?? '#3B81F6' }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+              <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+            </svg>
+            Reach out
+          </a>
+        </div>
       </div>
     </div>
   );

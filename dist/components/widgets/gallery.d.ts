@@ -6,7 +6,10 @@ export type GalleryPerson = {
     role?: string;
 };
 type GalleryProps = {
-    people?: GalleryPerson[];
+    people?: any[];
+    textInput?: {
+        sendButtonColor?: string;
+    };
 };
 export declare const Gallery: Component<GalleryProps>;
 export {};
