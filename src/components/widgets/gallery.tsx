@@ -8,22 +8,23 @@ export type GalleryPerson = {
 };
 
 type GalleryProps = {
-  people?: any[];
+  people: GalleryPerson;
   textInput?: {
     sendButtonColor?: string;
   };
 };
 
-// Default person for debugging
-const defaultPerson: GalleryPerson = {
-  name: 'Stephanie Linner',
-  email: 'mathilda@suisse-trombone.com',
-  photoUrl: 'https://i.pravatar.cc/300',
-  role: 'Chairman of the board',
-};
+// // Default person for debugging
+// const defaultPerson: GalleryPerson = {
+//   name: 'Stephanie Linner',
+//   email: 'mathilda@suisse-trombone.com',
+//   photoUrl: 'https://i.pravatar.cc/300',
+//   role: 'Chairman of the board',
+// };
 
 export const Gallery: Component<GalleryProps> = (props) => {
-  const person = () => props.person || defaultPerson;
+  const person = () => props.people;
+  console.log('Person:', person());
 
   const handleClick = () => {
     const mailtoUrl = `mailto:${person().email}?subject=Hello ${person().name}&body=Hi ${

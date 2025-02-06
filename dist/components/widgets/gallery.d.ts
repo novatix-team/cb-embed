@@ -6,7 +6,7 @@ export type GalleryPerson = {
     role?: string;
 };
 type GalleryProps = {
-    people?: any[];
+    people: GalleryPerson;
     textInput?: {
         sendButtonColor?: string;
     };
