@@ -1551,7 +1551,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
               <>
                 <div class="flex items-center gap-1 px-5">
                   <SparklesIcon class="w-4 h-4" />
-                  <span class="text-sm text-gray-700">Try these prompts</span>
+                  <span class="text-sm text-gray-700">Essayer ces questions</span>
                 </div>
                 <div class="w-full flex flex-row flex-wrap px-5 py-[10px] gap-2">
                   <For each={[...followUpPrompts()]}>
