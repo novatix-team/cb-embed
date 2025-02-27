@@ -45,7 +45,7 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
                 border: '1px solid #eeeeee',
               }}
             >
-              <span class="whitespace-pre-wrap font-semibold max-w-full">Provide additional feedback</span>
+              <span class="whitespace-pre-wrap font-semibold max-w-full">Fournir des commentaires supplémentaires</span>
               <button
                 class="p-1 ml-auto bg-transparent border-0 text-black float-right text-xl leading-none font-semibold outline-none focus:outline-none"
                 type="button"
@@ -90,7 +90,7 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
                 type="button"
                 onClick={submit}
               >
-                Submit Feedback
+                Envoyer le feedback
               </button>
             </div>
           </div>
