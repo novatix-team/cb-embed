@@ -299,24 +299,22 @@ export const BotBubble = (props: Props) => {
       let formatted = '';
 
       if (showDate) {
-        const dateFormatter = new Intl.DateTimeFormat('en-US', {
+        const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
           year: 'numeric',
-          month: 'short',
+          month: 'long',
           day: 'numeric',
           timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         });
-        const [{ value: month }, , { value: day }, , { value: year }] = dateFormatter.formatToParts(date);
-        formatted = `${month.charAt(0).toUpperCase() + month.slice(1)} ${day}, ${year}`;
+        formatted = dateFormatter.format(date);
       }
 
       if (showTime) {
-        const timeFormatter = new Intl.DateTimeFormat('en-US', {
-          hour: 'numeric',
+        const timeFormatter = new Intl.DateTimeFormat('fr-FR', {
+          hour: '2-digit',
           minute: '2-digit',
-          hour12: true,
           timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         });
-        const timeString = timeFormatter.format(date).toLowerCase();
+        const timeString = timeFormatter.format(date);
         formatted = formatted ? `${formatted}, ${timeString}` : timeString;
       }
 

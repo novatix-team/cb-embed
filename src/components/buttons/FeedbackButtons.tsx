@@ -22,7 +22,7 @@ export const CopyToClipboardButton = (props: RatingButtonProps) => {
         props.class
       }
       style={{ background: 'transparent', border: 'none' }}
-      title="Copy to clipboard"
+      title="Copier dans le presse-papiers"
     >
       <Show when={!props.isLoading} fallback={<Spinner class="text-white" />}>
         <ClipboardIcon color={props.feedbackColor ?? defaultFeedbackColor} class={'send-icon flex ' + (props.disableIcon ? 'hidden' : '')} />
@@ -42,7 +42,7 @@ export const ThumbsUpButton = (props: RatingButtonProps) => {
         props.class
       }
       style={{ background: 'transparent', border: 'none' }}
-      title="Thumbs Up"
+      title="Approuver"
     >
       <Show when={!props.isLoading} fallback={<Spinner class="text-white" />}>
         <ThumbsUpIcon color={props.feedbackColor ?? defaultFeedbackColor} class={'send-icon flex ' + (props.disableIcon ? 'hidden' : '')} />
@@ -62,7 +62,7 @@ export const ThumbsDownButton = (props: RatingButtonProps) => {
         props.class
       }
       style={{ background: 'transparent', border: 'none' }}
-      title="Thumbs Down"
+      title="Désapprouver"
     >
       <Show when={!props.isLoading} fallback={<Spinner class="text-white" />}>
         <ThumbsDownIcon color={props.feedbackColor ?? defaultFeedbackColor} class={'send-icon flex ' + (props.disableIcon ? 'hidden' : '')} />
