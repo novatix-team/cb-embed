@@ -18,7 +18,7 @@ const defaultTextColor = '#303235';
 const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
   const [inputValue, setInputValue] = createSignal('');
   let inputRef: HTMLInputElement | HTMLTextAreaElement | undefined;
-  
+
   const translations = getTranslations(props.language);
 
   const handleInput = (value: string) => setInputValue(value);
@@ -101,7 +101,7 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
                 type="button"
                 onClick={submit}
               >
-{translations.feedbackSubmit}
+                {translations.feedbackSubmit}
               </button>
             </div>
           </div>

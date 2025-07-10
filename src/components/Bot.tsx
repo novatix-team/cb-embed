@@ -457,10 +457,10 @@ const FormInputView = (props: {
 export const Bot = (botProps: BotProps & { class?: string }) => {
   // set a default value for showTitle if not set and merge with other props
   const props = mergeProps({ showTitle: true }, botProps);
-  
+
   // Initialize translations
   const translations = getTranslations(props.language);
-  
+
   let chatContainer: HTMLDivElement | undefined;
   let bottomSpacer: HTMLDivElement | undefined;
   let botContainer: HTMLDivElement | undefined;
@@ -1833,7 +1833,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                     'font-family': 'inherit',
                   }}
                 >
-{translations.disclaimer}
+                  {translations.disclaimer}
                 </p>
               </div>
             </div>

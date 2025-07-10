@@ -538,7 +538,13 @@ export const BotBubble = (props: Props) => {
                 </div>
               </Show> */}
               {rating() === '' || rating() === 'THUMBS_UP' ? (
-                <ThumbsUpButton feedbackColor={thumbsUpColor()} isDisabled={rating() === 'THUMBS_UP'} rating={rating()} language={props.language} onClick={onThumbsUpClick} />
+                <ThumbsUpButton
+                  feedbackColor={thumbsUpColor()}
+                  isDisabled={rating() === 'THUMBS_UP'}
+                  rating={rating()}
+                  language={props.language}
+                  onClick={onThumbsUpClick}
+                />
               ) : null}
               {rating() === '' || rating() === 'THUMBS_DOWN' ? (
                 <ThumbsDownButton

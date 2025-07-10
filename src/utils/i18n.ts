@@ -23,9 +23,10 @@ const translations: Record<SupportedLanguage, Translations> = {
   en: {
     disclaimer: 'AI-generated answers may contain errors. Verify important information.',
     disclaimerTitle: 'Disclaimer',
-    disclaimerMessage: 'Before we start, please note that by continuing this chat, you agree to our <a target="_blank" href="https://www.ehlgroup.com/en/privacy">Privacy Policy</a>. Do you agree?',
+    disclaimerMessage:
+      'Before we start, please note that by continuing this chat, you agree to our <a target="_blank" href="https://www.ehlgroup.com/en/privacy">Privacy Policy</a>. Do you agree?',
     disclaimerAgree: 'Yes, I agree',
-    disclaimerDeny: 'No, I don\'t',
+    disclaimerDeny: "No, I don't",
     inputPlaceholder: 'Ask a question about EHL...',
     tooltipMessage: 'A question about EHL? I can help!',
     feedbackTitle: 'Provide additional feedback',
@@ -35,16 +36,17 @@ const translations: Record<SupportedLanguage, Translations> = {
     closeChat: 'Close Chat',
     thumbsUp: 'Good answer',
     thumbsDown: 'Bad answer',
-    copyToClipboard: 'Copy to clipboard'
+    copyToClipboard: 'Copy to clipboard',
   },
   fr: {
-    disclaimer: 'Les réponses générées par l\'IA peuvent contenir des erreurs. Vérifiez les informations importantes.',
+    disclaimer: "Les réponses générées par l'IA peuvent contenir des erreurs. Vérifiez les informations importantes.",
     disclaimerTitle: 'Avertissement',
-    disclaimerMessage: 'Avant de commencer, veuillez noter qu\'en continuant cette conversation, vous acceptez notre <a target="_blank" href="https://www.ehlgroup.com/fr/privacy">Politique de confidentialité</a>. Êtes-vous d\'accord ?',
-    disclaimerAgree: 'Oui, j\'accepte',
+    disclaimerMessage:
+      'Avant de commencer, veuillez noter qu\'en continuant cette conversation, vous acceptez notre <a target="_blank" href="https://www.ehlgroup.com/fr/privacy">Politique de confidentialité</a>. Êtes-vous d\'accord ?',
+    disclaimerAgree: "Oui, j'accepte",
     disclaimerDeny: 'Non, je refuse',
-    inputPlaceholder: 'Posez une question sur l\'EHL...',
-    tooltipMessage: 'Une question sur l\'EHL ? Je peux vous aider !',
+    inputPlaceholder: "Posez une question sur l'EHL...",
+    tooltipMessage: "Une question sur l'EHL ? Je peux vous aider !",
     feedbackTitle: 'Fournir un commentaire supplémentaire',
     feedbackPlaceholder: 'Que pensez-vous de la réponse ?',
     feedbackSubmit: 'Envoyer les commentaires',
@@ -52,12 +54,13 @@ const translations: Record<SupportedLanguage, Translations> = {
     closeChat: 'Fermer le chat',
     thumbsUp: 'Bonne réponse',
     thumbsDown: 'Mauvaise réponse',
-    copyToClipboard: 'Copier dans le presse-papiers'
+    copyToClipboard: 'Copier dans le presse-papiers',
   },
   de: {
     disclaimer: 'KI-generierte Antworten können Fehler enthalten. Überprüfen Sie wichtige Informationen.',
     disclaimerTitle: 'Hinweis',
-    disclaimerMessage: 'Bevor wir beginnen, beachten Sie bitte, dass Sie durch die Fortsetzung dieses Chats unserer <a target="_blank" href="https://www.ehlgroup.com/de/privacy">Datenschutzerklärung</a> zustimmen. Sind Sie einverstanden?',
+    disclaimerMessage:
+      'Bevor wir beginnen, beachten Sie bitte, dass Sie durch die Fortsetzung dieses Chats unserer <a target="_blank" href="https://www.ehlgroup.com/de/privacy">Datenschutzerklärung</a> zustimmen. Sind Sie einverstanden?',
     disclaimerAgree: 'Ja, ich stimme zu',
     disclaimerDeny: 'Nein, ich stimme nicht zu',
     inputPlaceholder: 'Stellen Sie eine Frage zu EHL...',
@@ -69,8 +72,8 @@ const translations: Record<SupportedLanguage, Translations> = {
     closeChat: 'Chat schließen',
     thumbsUp: 'Gute Antwort',
     thumbsDown: 'Schlechte Antwort',
-    copyToClipboard: 'In Zwischenablage kopieren'
-  }
+    copyToClipboard: 'In Zwischenablage kopieren',
+  },
 };
 
 /**
@@ -79,14 +82,14 @@ const translations: Record<SupportedLanguage, Translations> = {
  */
 export function detectLanguageFromURL(): SupportedLanguage {
   if (typeof window === 'undefined') return 'en';
-  
+
   const path = window.location.pathname.toLowerCase();
-  
+
   // Check for language indicators in the path
   if (path.includes('/fr')) return 'fr';
   if (path.includes('/de')) return 'de';
   if (path.includes('/en')) return 'en';
-  
+
   // Default to English if no language indicator found
   return 'en';
 }
@@ -107,8 +110,6 @@ export function t(key: keyof Translations, language?: SupportedLanguage): string
   return trans[key];
 }
 
-
-
 /**
  * Sets up reactive translations that can be overridden from configuration
  */
@@ -116,6 +117,6 @@ export function createTranslationConfig(overrides?: Partial<Translations>, langu
   const baseTranslations = getTranslations(language);
   return {
     ...baseTranslations,
-    ...overrides
+    ...overrides,
   };
-} 
+}

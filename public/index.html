@@ -28,14 +28,39 @@
         // Auto-detect language from URL
         function detectLanguageFromURL() {
             const path = window.location.pathname.toLowerCase();
-            if (path.includes('/fr')) return 'fr';
-            if (path.includes('/de')) return 'de';
-            if (path.includes('/en')) return 'en';
+            const segments = path.split('/').filter(segment => segment.length > 0);
+            
+            // Check if the first path segment is a language code
+            if (segments.length > 0) {
+                const firstSegment = segments[0];
+                if (firstSegment === 'fr') return 'fr';
+                if (firstSegment === 'de') return 'de';
+                if (firstSegment === 'en') return 'en';
+            }
             return 'en'; // Default to English if no language indicator found
         }
         
         const detectedLanguage = detectLanguageFromURL();
         const privacyPolicyURL = `https://www.ehlgroup.com/${detectedLanguage}/privacy`;
+        
+        // Define starter prompts based on detected language
+        let starterPrompts;
+        if (detectedLanguage === 'de') {
+            starterPrompts = [
+                "Wie kann ich mich für EHL bewerben?",
+                "Was lernen wir an der EHL?",
+            ];
+        } else if (detectedLanguage === 'fr') {
+            starterPrompts = [
+                "Comment puis-je postuler à EHL?",
+                "Qu'apprenons-nous à EHL?",
+            ];
+        } else { // Default to English
+            starterPrompts = [
+                "How do I apply to EHL?",
+                "What do we learn at EHL?",
+            ];
+        }
         
         Chatbot.init({
             chatflowid: "25a88c38-ef99-4cd1-8889-8aed8592b2ca",
@@ -76,10 +101,10 @@
                     },
                 },
                 // Language is auto-detected from URL (/en, /fr, /de) or set manually below
-                // Leave tooltipMessage undefined to use auto-translated text
+                // Leave all message fields undefined to use auto-translated text
                 tooltip: {
                     showTooltip: false,
-                    // tooltipMessage: 'A question about EHL? I can help!', // Commented out to use auto-translation
+                    // tooltipMessage: 'A question about EHL? I can help!',
                     tooltipBackgroundColor: '#000E24',
                     tooltipTextColor: 'white',
                     tooltipFontSize: 16
@@ -106,10 +131,7 @@
                     backgroundColor: '#ffffff',
                     width: 500,
                     fontSize: 16,
-                    starterPrompts: [
-                        "How do I apply to EHL?",
-                        "What do we learn at EHL?",
-                    ],
+                    starterPrompts: starterPrompts,
                     starterPromptFontSize: 12,
                     clearChatOnReload: false,
                     sourceDocsTitle: 'Sources:',
@@ -126,17 +148,17 @@
                         showAvatar: false,
                     },
                     textInput: {
-                        // placeholder: 'Ask a question about EHL...', // Commented out to use auto-translation
+                        // placeholder: Commented out to use auto-translation
                         backgroundColor: '#ffffff',
                         textColor: '#303235',
                         sendButtonColor: '#000F29',
                         maxChars: 1500,
                         maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 1500 characters.',
-                        autoFocus: true,
-                        sendMessageSound: true,
-                        sendSoundLocation: 'send_message.mp3',
-                        receiveMessageSound: true,
-                        receiveSoundLocation: 'receive_message.mp3'
+                        autoFocus: true
+                        // sendMessageSound: true,
+                        // sendSoundLocation: 'send_message.mp3',
+                        // receiveMessageSound: true,
+                        // receiveSoundLocation: 'receive_message.mp3'
                     },
                     feedback: {
                         color: '#000F29',
