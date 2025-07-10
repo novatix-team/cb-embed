@@ -1810,9 +1810,29 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             </div>
           ) : null}
           <div class="flex flex-col w-full h-full justify-start z-0">
+            {/* AI disclaimer text - positioned below header, always visible */}
+            <div
+              class="flex flex-row items-center w-full h-[20px] absolute top-[50px] left-0 z-10"
+              style={{
+                background: props.backgroundColor || '#ffffff',
+              }}
+            >
+              <div class="w-full text-center px-3 py-1">
+                <p
+                  style={{
+                    color: '#919388',
+                    'font-size': '10px',
+                    margin: '0',
+                    'font-family': 'inherit',
+                  }}
+                >
+                  AI-generated answers may contain errors. Verify important information.
+                </p>
+              </div>
+            </div>
             <div
               ref={chatContainer}
-              class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[70px] relative scrollable-container chatbot-chat-view scroll-smooth"
+              class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[90px] relative scrollable-container chatbot-chat-view scroll-smooth"
             >
               <For each={[...messages()]}>
                 {(message, index) => {
@@ -1924,19 +1944,6 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                 <For each={[...previews()]}>{(item) => <>{previewDisplay(item)}</>}</For>
               </div>
             </Show>
-            {/* AI disclaimer text - positioned above footer */}
-            <div class="w-full text-center px-3 py-1">
-              <p
-                style={{
-                  color: '#919388',
-                  'font-size': '10px',
-                  margin: '0',
-                  'font-family': 'inherit',
-                }}
-              >
-                AI-generated answers may contain errors. Verify important information.
-              </p>
-            </div>
             <div class="w-full px-5 pb-1">
               {isRecording() ? (
                 <>
