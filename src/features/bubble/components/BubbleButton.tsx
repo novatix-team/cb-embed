@@ -20,8 +20,25 @@ const defaultRight = 20;
 export const BubbleButton = (props: Props) => {
   const buttonSize = getBubbleButtonSize(props.size);
 
+  // Responsive positioning: use different bottom values for mobile vs desktop
+  const getResponsiveBottom = () => {
+    const isMobile = window.innerWidth <= 640;
+    
+    // Use custom responsive values if provided
+    if (props.mobileBottom !== undefined && props.desktopBottom !== undefined) {
+      return isMobile ? props.mobileBottom : props.desktopBottom;
+    }
+    
+    // Fallback to legacy responsive logic for backward compatibility
+    const baseBottom = props.bottom ?? defaultBottom;
+    if (!isMobile && baseBottom === 60) {
+      return 20;
+    }
+    return baseBottom;
+  };
+
   const [position, setPosition] = createSignal({
-    bottom: props.bottom ?? defaultBottom,
+    bottom: getResponsiveBottom(),
     right: props.right ?? defaultRight,
   });
 
@@ -30,6 +47,37 @@ export const BubbleButton = (props: Props) => {
 
   let dragStartX: number;
   let initialRight: number;
+
+  // Update position on window resize for responsive behavior
+  const handleResize = () => {
+    const newPosition = {
+      bottom: getResponsiveBottom(),
+      right: position().right,
+    };
+    setPosition(newPosition);
+    props.setButtonPosition(newPosition);
+    
+    // Fix: Reset isSmallScreen when switching to desktop to prevent button hiding bug
+    if (window.innerWidth > 640) {
+      setIsSmallScreen(false);
+    }
+  };
+
+  // Set up resize listener
+  createEffect(() => {
+    window.addEventListener('resize', handleResize);
+    // Set initial position
+    const initialPosition = {
+      bottom: getResponsiveBottom(),
+      right: props.right ?? defaultRight,
+    };
+    setPosition(initialPosition);
+    props.setButtonPosition(initialPosition);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
 
   const onMouseDown = (e: MouseEvent) => {
     if (props.dragAndDrop) {

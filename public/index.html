@@ -16,6 +16,11 @@
 </head>
 
 <body>
+    <h1>EHL Digital Assistant</h1>
+    <p>This is a page to test the chatbot</p>
+</body>
+
+<body>
     <div id="root"></div>
     <script type="module">
         import Chatbot from './web.js'
@@ -45,7 +50,8 @@
                 button: {
                     backgroundColor: '#F1F1EF',
                     right: 10,
-                    bottom: 60,
+                    mobileBottom: 60,   // Mobile positioning (avoids scroll arrow)
+                    desktopBottom: 20,  // Desktop positioning (symmetric corner)
                     size: 85,
                     dragAndDrop: false,
                     iconColor: '#000E24',

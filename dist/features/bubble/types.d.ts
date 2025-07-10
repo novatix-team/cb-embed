@@ -87,6 +87,8 @@ export type ButtonTheme = {
     customIconSrc?: string;
     bottom?: number;
     right?: number;
+    mobileBottom?: number;
+    desktopBottom?: number;
     dragAndDrop?: boolean;
     autoWindowOpen?: autoWindowOpenTheme;
 };

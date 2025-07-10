@@ -96,6 +96,8 @@ export type ButtonTheme = {
   customIconSrc?: string;
   bottom?: number;
   right?: number;
+  mobileBottom?: number; // Custom bottom position for mobile (≤640px)
+  desktopBottom?: number; // Custom bottom position for desktop (>640px)
   dragAndDrop?: boolean; // parameter to enable drag and drop(true or false)
   autoWindowOpen?: autoWindowOpenTheme;
 };
