@@ -524,12 +524,13 @@ export const BotBubble = (props: Props) => {
         {props.chatFeedbackStatus && props.message.messageId && (
           <>
             <div class={`flex items-center px-2 pb-2 ${props.showAvatar ? 'ml-10' : ''}`}>
-              <CopyToClipboardButton feedbackColor={props.feedbackColor} onClick={() => copyMessageToClipboard()} />
+              {/* Copy button disabled - uncomment to restore copy functionality */}
+              {/* <CopyToClipboardButton feedbackColor={props.feedbackColor} onClick={() => copyMessageToClipboard()} />
               <Show when={copiedMessage()}>
                 <div class="copied-message" style={{ color: props.feedbackColor ?? defaultFeedbackColor }}>
                   Copied!
                 </div>
-              </Show>
+              </Show> */}
               {rating() === '' || rating() === 'THUMBS_UP' ? (
                 <ThumbsUpButton feedbackColor={thumbsUpColor()} isDisabled={rating() === 'THUMBS_UP'} rating={rating()} onClick={onThumbsUpClick} />
               ) : null}

@@ -46,17 +46,17 @@ export const DisclaimerPopup = (props: DisclaimerPopupProps) => {
   return (
     <Show when={popupProps.isOpen}>
       <div
-        class="fixed inset-0 rounded-lg flex items-center justify-center z-50"
+        class="fixed inset-0 rounded-lg flex items-end justify-center pb-10 z-50"
         style={{ background: popupProps.blurredBackgroundColor || 'rgba(0, 0, 0, 0.4)' }}
       >
         <div
-          class="p-10 rounded-lg shadow-lg max-w-md w-full text-center mx-4 font-sans"
+          class="p-10 rounded-lg shadow-lg max-w-md w-full text-left mx-4 font-sans"
           style={{ background: popupProps.backgroundColor || 'white', color: popupProps.textColor || 'black' }}
         >
-          <h2 class="text-2xl font-semibold mb-4 flex justify-center items-center">{popupProps.title ?? 'Disclaimer'}</h2>
+          <h2 class="text-xl font-semibold mb-4">{popupProps.title ?? 'Disclaimer'}</h2>
 
           <p
-            class="text-gray-700 text-base mb-6"
+            class="text-gray-700 text-sm mb-6"
             style={{ color: popupProps.textColor || 'black' }}
             innerHTML={
               popupProps.message ??
@@ -64,9 +64,9 @@ export const DisclaimerPopup = (props: DisclaimerPopupProps) => {
             }
           />
 
-          <div class="flex justify-center space-x-4">
+          <div class="flex justify-start space-x-4">
             <button
-              class="font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+              class="font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline text-sm"
               style={{ background: popupProps.buttonColor || '#3b82f6', color: popupProps.buttonTextColor || 'white' }}
               onClick={handleAccept}
             >
@@ -76,8 +76,8 @@ export const DisclaimerPopup = (props: DisclaimerPopupProps) => {
             {/* Only show the Cancel button if not in full-page mode */}
             <Show when={!popupProps.isFullPage}>
               <button
-                class="font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
-                style={{ background: popupProps.denyButtonBgColor || '#ef4444', color: popupProps.buttonTextColor || 'white' }}
+                class="font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline text-sm"
+                style={{ background: popupProps.denyButtonBgColor || 'red', color: '#000E24' }}
                 onClick={handleDeny}
               >
                 {popupProps.denyButtonText ?? 'Cancel'}
