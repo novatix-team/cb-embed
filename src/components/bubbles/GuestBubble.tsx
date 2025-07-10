@@ -22,7 +22,8 @@ const defaultTextColor = '#ffffff';
 const defaultFontSize = 16;
 
 export const GuestBubble = (props: Props) => {
-  Marked.setOptions({ isNoP: true, sanitize: props.renderHTML !== undefined ? !props.renderHTML : true });
+  // Always sanitize user input to prevent XSS attacks, regardless of renderHTML setting
+  Marked.setOptions({ isNoP: true, sanitize: true });
 
   // Callback ref to set innerHTML and apply text color to all Markdown elements
   const setUserMessageRef = (el: HTMLSpanElement) => {
