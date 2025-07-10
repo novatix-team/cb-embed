@@ -24,6 +24,8 @@
     <div id="root"></div>
     <script type="module">
         import Chatbot from './web.js'
+        // use the following line to embed the chatbot on your own website, uncomment the previous one
+        //import Chatbot from "https://cdn.jsdelivr.net/gh/novatix/cb-embed@f3e4cf19f0e3b5428770905ddd459312b73f6ff3/dist/web.js"
         
         // Auto-detect language from URL
         function detectLanguageFromURL() {
@@ -60,6 +62,16 @@
                 "How do I apply to EHL?",
                 "What do we learn at EHL?",
             ];
+        }
+        
+        // Define welcome message based on detected language
+        let welcomeMessage;
+        if (detectedLanguage === 'de') {
+            welcomeMessage = 'Hallo! Ich bin der digitale Assistent von EHL. Ich kann Ihnen bei Fragen zu unseren Programmen, Zulassungsverfahren, dem Campusleben und mehr helfen. Wie kann ich Ihnen behilflich sein?';
+        } else if (detectedLanguage === 'fr') {
+            welcomeMessage = 'Bonjour ! Je suis l\'assistant numérique d\'EHL. Je peux vous aider avec des questions sur nos programmes, les admissions, la vie sur le campus et plus encore. Comment puis-je vous aider ?';
+        } else { // Default to English
+            welcomeMessage = 'Hello! I\'m EHL\'s Digital Assistant. I can help you with questions about our programs, admissions process, campus life, and more. How can I assist you today?';
         }
         
         Chatbot.init({
@@ -126,7 +138,7 @@
                     showAgentMessages: true,
                     title: 'EHL Digital Assistant',
                     titleAvatarSrc: 'images/chat_bubble.png',
-                    welcomeMessage: 'Hey! I\'m EHL\'s Digital Assistant. How can I help you today?',
+                    welcomeMessage: welcomeMessage,
                     errorMessage: 'There seems to be an error. Please try again later.',
                     backgroundColor: '#ffffff',
                     width: 500,
@@ -175,7 +187,7 @@
                     footer: {
                         textColor: '#919388',
                         fontSize: 4,
-                        text: 'Powered by [Novatix](https://www.novatix.ch)',
+                        text: 'Powered by [Novatix](https://www.novatix.ch?utm_source=ehl_chatbot)',
                         company: 'EHL\'s Privacy Policy',
                         companyLink: privacyPolicyURL, // Auto-constructed based on detected language
                         companyTextColor: '#000F29'
