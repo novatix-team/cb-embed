@@ -1,5 +1,6 @@
 import { FooterTheme } from '@/features/bubble/types';
 import { Show, onCleanup, onMount } from 'solid-js';
+import { Marked } from '@ts-stack/markdown';
 
 type Props = {
   footer?: FooterTheme;
@@ -13,6 +14,26 @@ const defaultTextColor = '#303235';
 export const Badge = (props: Props) => {
   let liteBadge: HTMLAnchorElement | undefined;
   let observer: MutationObserver | undefined;
+
+  // Set up markdown options
+  Marked.setOptions({ isNoP: true, sanitize: false });
+
+  // Function to set up the markdown text with proper link styling
+  const setMarkdownTextRef = (el: HTMLSpanElement) => {
+    if (el) {
+      const textContent = props.footer?.text ?? 'Powered by';
+      el.innerHTML = Marked.parse(textContent);
+      
+      // Style all links in the markdown text
+      el.querySelectorAll('a').forEach((link) => {
+        link.style.color = props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor;
+        link.style.fontWeight = 'bold';
+        link.style.textDecoration = 'none';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      });
+    }
+  };
 
   const appendBadgeIfNecessary = (mutations: MutationRecord[]) => {
     mutations.forEach((mutation) => {
@@ -48,18 +69,20 @@ export const Badge = (props: Props) => {
             'background-color': props.badgeBackgroundColor ?? '#ffffff',
           }}
         >
-          {props.footer?.text ?? 'Powered by'}
-          <a
-            ref={liteBadge}
-            href={props.footer?.companyLink ?? 'https://flowiseai.com'}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="lite-badge"
-            id="lite-badge"
-            style={{ 'font-weight': 'bold', color: props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor }}
-          >
-            <span>&nbsp;{props.footer?.company ?? 'Flowise'}</span>
-          </a>
+          <span ref={setMarkdownTextRef} />
+          <Show when={props.footer?.company}>
+            <a
+              ref={liteBadge}
+              href={props.footer?.companyLink ?? 'https://flowiseai.com'}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="lite-badge"
+              id="lite-badge"
+              style={{ 'font-weight': 'bold', color: props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor }}
+            >
+              <span>&nbsp;{props.footer?.company}</span>
+            </a>
+          </Show>
         </span>
       </Show>
       <Show when={props.footer?.showFooter === false}>

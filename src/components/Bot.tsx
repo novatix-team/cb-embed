@@ -1926,12 +1926,14 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             </Show>
             {/* AI disclaimer text - positioned above footer */}
             <div class="w-full text-center px-3 py-1">
-              <p style={{ 
-                color: '#919388', 
-                'font-size': '10px', 
-                margin: '0',
-                'font-family': 'inherit'
-              }}>
+              <p
+                style={{
+                  color: '#919388',
+                  'font-size': '10px',
+                  margin: '0',
+                  'font-family': 'inherit',
+                }}
+              >
                 AI-generated answers may contain errors. Verify important information.
               </p>
             </div>
