@@ -50,6 +50,7 @@ export const DisclaimerPopup = (props: DisclaimerPopupProps) => {
         style={{ background: popupProps.blurredBackgroundColor || 'rgba(0, 0, 0, 0.4)' }}
       >
         <div
+          part="disclaimer"
           class="p-10 rounded-lg shadow-lg max-w-md w-full text-left mx-4 font-sans"
           style={{ background: popupProps.backgroundColor || 'white', color: popupProps.textColor || 'black' }}
         >
