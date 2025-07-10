@@ -55,6 +55,10 @@ export type FooterTheme = {
 
 export type FeedbackTheme = {
   color?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  inputColor?: string;
+  buttonColor?: string;
 };
 
 export type ChatWindowTheme = {

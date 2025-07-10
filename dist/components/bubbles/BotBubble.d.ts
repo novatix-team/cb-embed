@@ -14,6 +14,10 @@ type Props = {
     chatFeedbackStatus?: boolean;
     fontSize?: number;
     feedbackColor?: string;
+    feedbackBackgroundColor?: string;
+    feedbackTextColor?: string;
+    feedbackInputColor?: string;
+    feedbackButtonColor?: string;
     isLoading: boolean;
     dateTimeToggle?: DateTimeToggleTheme;
     showAgentMessages?: boolean;

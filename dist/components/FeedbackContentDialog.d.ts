@@ -4,6 +4,8 @@ type FeedbackContentDialogProps = {
     onSubmit: (text: string) => void;
     backgroundColor?: string;
     textColor?: string;
+    inputColor?: string;
+    buttonColor?: string;
 };
 declare const FeedbackContentDialog: (props: FeedbackContentDialogProps) => import("solid-js").JSX.Element;
 export default FeedbackContentDialog;

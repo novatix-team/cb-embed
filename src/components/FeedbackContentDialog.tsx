@@ -6,6 +6,8 @@ type FeedbackContentDialogProps = {
   onSubmit: (text: string) => void;
   backgroundColor?: string;
   textColor?: string;
+  inputColor?: string;
+  buttonColor?: string;
 };
 
 const defaultBackgroundColor = '#ffffff';
@@ -78,7 +80,8 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
                 class="block p-2.5 rounded-lg border focus:ring-blue-500 focus:border-blue-500 bg-transparent flex-1 w-full feedback-input disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 font-normal"
                 style={{
                   border: '1px solid #eeeeee',
-                  color: props.textColor ?? defaultTextColor,
+                  color: props.inputColor ?? props.textColor ?? defaultTextColor,
+                  'background-color': 'transparent',
                 }}
                 placeholder="What do you think of the response?"
                 value={inputValue()}
@@ -86,7 +89,11 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
             </div>
             <div class="flex items-center justify-end p-4 border-t border-solid border-blueGray-200 rounded-b">
               <button
-                class="bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                class="font-bold text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                style={{
+                  'background-color': props.buttonColor ?? '#10b981',
+                  color: 'white',
+                }}
                 type="button"
                 onClick={submit}
               >

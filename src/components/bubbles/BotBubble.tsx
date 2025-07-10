@@ -25,6 +25,10 @@ type Props = {
   chatFeedbackStatus?: boolean;
   fontSize?: number;
   feedbackColor?: string;
+  feedbackBackgroundColor?: string;
+  feedbackTextColor?: string;
+  feedbackInputColor?: string;
+  feedbackButtonColor?: string;
   isLoading: boolean;
   dateTimeToggle?: DateTimeToggleTheme;
   showAgentMessages?: boolean;
@@ -553,8 +557,10 @@ export const BotBubble = (props: Props) => {
                 isOpen={showFeedbackContentDialog()}
                 onClose={() => setShowFeedbackContentModal(false)}
                 onSubmit={submitFeedbackContent}
-                backgroundColor={props.backgroundColor}
-                textColor={props.textColor}
+                backgroundColor={props.feedbackBackgroundColor}
+                textColor={props.feedbackTextColor}
+                inputColor={props.feedbackInputColor}
+                buttonColor={props.feedbackButtonColor}
               />
             </Show>
           </>
