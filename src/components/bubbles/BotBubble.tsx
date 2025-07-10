@@ -62,9 +62,9 @@ export const BotBubble = (props: Props) => {
     if (el) {
       el.innerHTML = Marked.parse(props.message.message);
 
-      // Apply textColor to all links, headings, and other markdown elements except code
+      // Apply textColor to all links, headings, table elements and other markdown elements except code
       const textColor = props.textColor ?? defaultTextColor;
-      el.querySelectorAll('a, h1, h2, h3, h4, h5, h6, strong, em, blockquote, li').forEach((element) => {
+      el.querySelectorAll('a, h1, h2, h3, h4, h5, h6, strong, em, blockquote, li, table, th, td, tr').forEach((element) => {
         (element as HTMLElement).style.color = textColor;
       });
 
@@ -286,7 +286,7 @@ export const BotBubble = (props: Props) => {
       if (el) {
         const textColor = props.textColor ?? defaultTextColor;
         // Apply textColor to all elements except code blocks
-        el.querySelectorAll('a, h1, h2, h3, h4, h5, h6, strong, em, blockquote, li').forEach((element) => {
+        el.querySelectorAll('a, h1, h2, h3, h4, h5, h6, strong, em, blockquote, li, table, th, td, tr').forEach((element) => {
           (element as HTMLElement).style.color = textColor;
         });
 
