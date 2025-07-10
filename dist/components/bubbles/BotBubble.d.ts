@@ -1,3 +1,4 @@
+import { type SupportedLanguage } from '@/utils/i18n';
 import { IAction, MessageType } from '../Bot';
 import { DateTimeToggleTheme } from '@/features/bubble/types';
 type Props = {
@@ -25,6 +26,7 @@ type Props = {
     renderHTML?: boolean;
     handleActionClick: (elem: any, action: IAction | undefined | null) => void;
     handleSourceDocumentsClick: (src: any) => void;
+    language?: SupportedLanguage;
 };
 export declare const BotBubble: (props: Props) => import("solid-js").JSX.Element;
 export {};

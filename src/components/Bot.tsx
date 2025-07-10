@@ -36,6 +36,7 @@ import { removeLocalStorageChatHistory, getLocalStorageChatflow, setLocalStorage
 import { cloneDeep } from 'lodash';
 import { FollowUpPromptBubble } from '@/components/bubbles/FollowUpPromptBubble';
 import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
+import { getTranslations, type SupportedLanguage } from '@/utils/i18n';
 
 export type FileEvent<T = EventTarget> = {
   target: T;
@@ -172,6 +173,7 @@ export type BotProps = {
   dateTimeToggle?: DateTimeToggleTheme;
   renderHTML?: boolean;
   closeBot?: () => void;
+  language?: SupportedLanguage;
 };
 
 export type LeadsConfig = {
@@ -455,6 +457,10 @@ const FormInputView = (props: {
 export const Bot = (botProps: BotProps & { class?: string }) => {
   // set a default value for showTitle if not set and merge with other props
   const props = mergeProps({ showTitle: true }, botProps);
+  
+  // Initialize translations
+  const translations = getTranslations(props.language);
+  
   let chatContainer: HTMLDivElement | undefined;
   let bottomSpacer: HTMLDivElement | undefined;
   let botContainer: HTMLDivElement | undefined;
@@ -1803,6 +1809,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                 type="button"
                 isDisabled={messages().length === 1}
                 class="my-2 ml-2"
+                language={props.language}
                 on:click={clearChat}
               >
                 <span style={{ 'font-family': 'Poppins, sans-serif' }}>Clear</span>
@@ -1826,7 +1833,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                     'font-family': 'inherit',
                   }}
                 >
-                  AI-generated answers may contain errors. Verify important information.
+{translations.disclaimer}
                 </p>
               </div>
             </div>
@@ -1880,6 +1887,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
                           }}
                           dateTimeToggle={props.dateTimeToggle}
                           renderHTML={props.renderHTML}
+                          language={props.language}
                         />
                       )}
                       {message.type === 'leadCaptureMessage' && leadsConfig()?.status && !getLocalStorageChatflow(props.chatflowid)?.lead && (
@@ -2040,16 +2048,16 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
         <DisclaimerPopup
           isOpen={disclaimerPopupOpen()}
           onAccept={handleDisclaimerAccept}
-          title={props.disclaimer?.title}
-          message={props.disclaimer?.message}
+          title={props.disclaimer?.title || translations.disclaimerTitle}
+          message={props.disclaimer?.message || translations.disclaimerMessage}
           textColor={props.disclaimer?.textColor}
           buttonColor={props.disclaimer?.buttonColor}
-          buttonText={props.disclaimer?.buttonText}
+          buttonText={props.disclaimer?.buttonText || translations.disclaimerAgree}
           buttonTextColor={props.disclaimer?.buttonTextColor}
           blurredBackgroundColor={props.disclaimer?.blurredBackgroundColor}
           backgroundColor={props.disclaimer?.backgroundColor}
           denyButtonBgColor={props.disclaimer?.denyButtonBgColor}
-          denyButtonText={props.disclaimer?.denyButtonText}
+          denyButtonText={props.disclaimer?.denyButtonText || translations.disclaimerDeny}
           onDeny={props.closeBot}
           isFullPage={props.isFullPage}
         />

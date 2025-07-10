@@ -1,4 +1,5 @@
 import { createSignal } from 'solid-js';
+import { getTranslations, type SupportedLanguage } from '@/utils/i18n';
 
 type FeedbackContentDialogProps = {
   isOpen: boolean;
@@ -8,6 +9,7 @@ type FeedbackContentDialogProps = {
   textColor?: string;
   inputColor?: string;
   buttonColor?: string;
+  language?: SupportedLanguage;
 };
 
 const defaultBackgroundColor = '#ffffff';
@@ -16,6 +18,8 @@ const defaultTextColor = '#303235';
 const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
   const [inputValue, setInputValue] = createSignal('');
   let inputRef: HTMLInputElement | HTMLTextAreaElement | undefined;
+  
+  const translations = getTranslations(props.language);
 
   const handleInput = (value: string) => setInputValue(value);
 
@@ -47,7 +51,7 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
                 border: '1px solid #eeeeee',
               }}
             >
-              <span class="whitespace-pre-wrap font-semibold max-w-full">Provide additional feedback</span>
+              <span class="whitespace-pre-wrap font-semibold max-w-full">{translations.feedbackTitle}</span>
               <button
                 class="p-1 ml-auto bg-transparent border-0 text-black float-right text-xl leading-none font-semibold outline-none focus:outline-none"
                 type="button"
@@ -83,7 +87,7 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
                   color: props.inputColor ?? props.textColor ?? defaultTextColor,
                   'background-color': 'transparent',
                 }}
-                placeholder="What do you think of the response?"
+                placeholder={translations.feedbackPlaceholder}
                 value={inputValue()}
               />
             </div>
@@ -97,7 +101,7 @@ const FeedbackContentDialog = (props: FeedbackContentDialogProps) => {
                 type="button"
                 onClick={submit}
               >
-                Submit Feedback
+{translations.feedbackSubmit}
               </button>
             </div>
           </div>

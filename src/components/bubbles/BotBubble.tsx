@@ -1,6 +1,7 @@
 import { createEffect, Show, createSignal, onMount, For } from 'solid-js';
 import { Avatar } from '../avatars/Avatar';
 import { Marked } from '@ts-stack/markdown';
+import { type SupportedLanguage } from '@/utils/i18n';
 import { FeedbackRatingType, sendFeedbackQuery, sendFileDownloadQuery, updateFeedbackQuery } from '@/queries/sendMessageQuery';
 import { FileUpload, IAction, MessageType } from '../Bot';
 import { CopyToClipboardButton, ThumbsDownButton, ThumbsUpButton } from '../buttons/FeedbackButtons';
@@ -36,6 +37,7 @@ type Props = {
   renderHTML?: boolean;
   handleActionClick: (elem: any, action: IAction | undefined | null) => void;
   handleSourceDocumentsClick: (src: any) => void;
+  language?: SupportedLanguage;
 };
 
 const defaultBackgroundColor = '#f7f8ff';
@@ -536,13 +538,14 @@ export const BotBubble = (props: Props) => {
                 </div>
               </Show> */}
               {rating() === '' || rating() === 'THUMBS_UP' ? (
-                <ThumbsUpButton feedbackColor={thumbsUpColor()} isDisabled={rating() === 'THUMBS_UP'} rating={rating()} onClick={onThumbsUpClick} />
+                <ThumbsUpButton feedbackColor={thumbsUpColor()} isDisabled={rating() === 'THUMBS_UP'} rating={rating()} language={props.language} onClick={onThumbsUpClick} />
               ) : null}
               {rating() === '' || rating() === 'THUMBS_DOWN' ? (
                 <ThumbsDownButton
                   feedbackColor={thumbsDownColor()}
                   isDisabled={rating() === 'THUMBS_DOWN'}
                   rating={rating()}
+                  language={props.language}
                   onClick={onThumbsDownClick}
                 />
               ) : null}
@@ -561,6 +564,7 @@ export const BotBubble = (props: Props) => {
                 textColor={props.feedbackTextColor}
                 inputColor={props.feedbackInputColor}
                 buttonColor={props.feedbackButtonColor}
+                language={props.language}
               />
             </Show>
           </>

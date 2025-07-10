@@ -1,9 +1,11 @@
 import { JSX } from 'solid-js/jsx-runtime';
+import { SupportedLanguage } from '@/utils/i18n';
 type SendButtonProps = {
     sendButtonColor?: string;
     isDisabled?: boolean;
     isLoading?: boolean;
     disableIcon?: boolean;
+    language?: SupportedLanguage;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 export declare const SendButton: (props: SendButtonProps) => JSX.Element;
 export declare const DeleteButton: (props: SendButtonProps) => JSX.Element;

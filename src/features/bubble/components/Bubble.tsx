@@ -5,6 +5,7 @@ import { BubbleParams } from '../types';
 import { Bot, BotProps } from '../../../components/Bot';
 import Tooltip from './Tooltip';
 import { getBubbleButtonSize } from '@/utils';
+import { detectLanguageFromURL, getTranslations } from '@/utils/i18n';
 
 const defaultButtonColor = '#3B81F6';
 const defaultIconColor = 'white';
@@ -20,6 +21,10 @@ export const Bubble = (props: BubbleProps) => {
     bottom: bubbleProps.theme?.button?.bottom ?? 20,
     right: bubbleProps.theme?.button?.right ?? 20,
   });
+
+  // Language detection and translations
+  const detectedLanguage = bubbleProps.theme?.language || detectLanguageFromURL();
+  const translations = getTranslations(detectedLanguage);
 
   const openBot = () => {
     if (!isBotStarted()) setIsBotStarted(true);
@@ -66,7 +71,7 @@ export const Bubble = (props: BubbleProps) => {
         showTooltip={showTooltip && !isBotOpened()}
         position={buttonPosition()}
         buttonSize={buttonSize}
-        tooltipMessage={bubbleProps.theme?.tooltip?.tooltipMessage}
+        tooltipMessage={bubbleProps.theme?.tooltip?.tooltipMessage || translations.tooltipMessage}
         tooltipBackgroundColor={bubbleProps.theme?.tooltip?.tooltipBackgroundColor}
         tooltipTextColor={bubbleProps.theme?.tooltip?.tooltipTextColor}
         tooltipFontSize={bubbleProps.theme?.tooltip?.tooltipFontSize} // Set the tooltip font size
@@ -112,7 +117,7 @@ export const Bubble = (props: BubbleProps) => {
               <button
                 onClick={closeBot}
                 class="py-2 pr-3 absolute top-0 right-[-8px] m-[6px] bg-transparent text-white rounded-full z-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:brightness-100 transition-all filter hover:brightness-90 active:brightness-75 hover:scale-125"
-                title="Close Chat"
+                title={translations.closeChat}
               >
                 <svg viewBox="0 0 24 24" width="24" height="24">
                   <path
@@ -138,7 +143,10 @@ export const Bubble = (props: BubbleProps) => {
               welcomeMessage={bubbleProps.theme?.chatWindow?.welcomeMessage}
               errorMessage={bubbleProps.theme?.chatWindow?.errorMessage}
               poweredByTextColor={bubbleProps.theme?.chatWindow?.poweredByTextColor}
-              textInput={bubbleProps.theme?.chatWindow?.textInput}
+              textInput={{
+                ...bubbleProps.theme?.chatWindow?.textInput,
+                placeholder: bubbleProps.theme?.chatWindow?.textInput?.placeholder || translations.inputPlaceholder
+              }}
               botMessage={bubbleProps.theme?.chatWindow?.botMessage}
               userMessage={bubbleProps.theme?.chatWindow?.userMessage}
               feedback={bubbleProps.theme?.chatWindow?.feedback}
@@ -156,6 +164,7 @@ export const Bubble = (props: BubbleProps) => {
               disclaimer={bubbleProps.theme?.disclaimer}
               dateTimeToggle={bubbleProps.theme?.chatWindow?.dateTimeToggle}
               renderHTML={props.theme?.chatWindow?.renderHTML}
+              language={detectedLanguage}
               closeBot={closeBot}
             />
           </div>

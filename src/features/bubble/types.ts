@@ -9,6 +9,7 @@ export type BubbleTheme = {
   disclaimer?: DisclaimerPopUpTheme;
   customCSS?: string;
   form?: FormTheme;
+  language?: 'en' | 'fr' | 'de'; // Auto-detected from URL or manually set
 };
 
 export type FormTheme = {

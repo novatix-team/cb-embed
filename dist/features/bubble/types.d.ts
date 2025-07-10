@@ -8,6 +8,7 @@ export type BubbleTheme = {
     disclaimer?: DisclaimerPopUpTheme;
     customCSS?: string;
     form?: FormTheme;
+    language?: 'en' | 'fr' | 'de';
 };
 export type FormTheme = {
     backgroundColor?: string;

@@ -1,12 +1,14 @@
 import { Show } from 'solid-js';
 import { JSX } from 'solid-js/jsx-runtime';
 import { DeleteIcon, SendIcon, TrashIcon } from '../icons';
+import { t, SupportedLanguage } from '@/utils/i18n';
 
 type SendButtonProps = {
   sendButtonColor?: string;
   isDisabled?: boolean;
   isLoading?: boolean;
   disableIcon?: boolean;
+  language?: SupportedLanguage;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const SendButton = (props: SendButtonProps) => {
@@ -42,7 +44,7 @@ export const DeleteButton = (props: SendButtonProps) => {
         props.class
       }
       style={{ background: 'transparent', border: 'none' }}
-      title="Start New Chat"
+      title={t('startNewChat', props.language)}
     >
       <Show when={!props.isLoading} fallback={<Spinner class="text-white" />}>
         <TrashIcon color={props.sendButtonColor} class={'send-icon flex ' + (props.disableIcon ? 'hidden' : '')} />
