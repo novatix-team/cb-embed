@@ -20,16 +20,119 @@
     <script type="module">
         import Chatbot from './web.js'
         
-        // Example initialization:
-        // If your .env contains:
-        // agent1=xyz789-uvw456,https://example.com
-        // support=abc123-def456,https://example.com
-        // salesbot=ghi123-jkl456,https://example.com
-        //
-        // Then use the environment variable name as chatflowid:
         Chatbot.init({
-            chatflowid: 'agent1',    // or 'support', 'salesbot', etc.
-            apiHost: window.location.origin
+            chatflowid: "25a88c38-ef99-4cd1-8889-8aed8592b2ca",
+            apiHost: "https://ehlchatbot.ehl.edu",
+            chatflowConfig: {
+                            vars: {
+                                "today_date": new Date().toLocaleDateString('en-GB', {
+                                    weekday: 'long',
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                })
+                            }
+                        },
+            observersConfig: {
+                /* Observers Config */
+            },
+            theme: {
+                customCSS: "* { font-family: 'Open Sans', sans-serif; } \
+                [part='button'] { background-color: #FFFFFF !important; padding: 0px !important; width: 60px !important; height: 60px !important;} \
+                [part='bot'] { border-radius: 15px !important; overflow: hidden } \
+                [part='host-bubble'] , .chatbot-host-bubble { border-radius: 15px !important; overflow: hidden !important; } \
+                [part='user-message'], .chatbot-guest-bubble { border-radius: 15px !important; overflow: hidden !important; }", 
+                button: {
+                    backgroundColor: '#F1F1EF',
+                    right: 10,
+                    bottom: 60,
+                    size: 85,
+                    dragAndDrop: false,
+                    iconColor: '#000E24',
+                    customIconSrc: 'chat_bubble_3.png',
+                    autoWindowOpen: {
+                        autoOpen: false,
+                        openDelay: 2,
+                        autoOpenOnMobile: false
+                    },
+                },
+                tooltip: {
+                    showTooltip: false,
+                    tooltipMessage: 'A question about EHL? I can help!',
+                    tooltipBackgroundColor: '#000E24',
+                    tooltipTextColor: 'white',
+                    tooltipFontSize: 16
+                },
+                disclaimer: {
+                    title: 'Disclaimer',
+                    message: "By using this chatbot, you agree to <br>EHL's <a target=\"_blank\" href=\"https://www.ehlgroup.com/en/privacy\">Privacy Policy</a>",
+                    textColor: 'black',
+                    buttonColor: '#000E24',
+                    buttonText: 'I agree, start chatting',
+                    buttonTextColor: 'white',
+                    blurredBackgroundColor: 'rgba(0, 0, 0, 0.4)',
+                    backgroundColor: 'white'
+                },
+                chatWindow: {
+                    showTitle: true,
+                    showAgentMessages: true,
+                    title: 'EHL Digital Assistant',
+                    titleAvatarSrc: 'chat_bubble_3.png',
+                    welcomeMessage: 'Hey! I\'m EHL\'s Digital Assistant. How can I help you today?',
+                    errorMessage: 'There seems to be an error. Please try again later.',
+                    backgroundColor: '#ffffff',
+                    width: 500,
+                    fontSize: 16,
+                    starterPrompts: [
+                        "How do I apply to EHL?",
+                        "What do we learn at EHL?",
+                    ],
+                    starterPromptFontSize: 12,
+                    clearChatOnReload: false,
+                    sourceDocsTitle: 'Sources:',
+                    renderHTML: true,
+                    botMessage: {
+                        backgroundColor: '#F1F1EF',
+                        textColor: '#000F29',
+                        showAvatar: true,
+                        avatarSrc: 'EHL_bubble.webp'
+                    },
+                    userMessage: {
+                        backgroundColor: '#000E24',
+                        textColor: '#FFFFFF',
+                        showAvatar: false,
+                        avatarSrc: 'profile-user.png'
+                    },
+                    textInput: {
+                        placeholder: 'Type your question here',
+                        backgroundColor: '#ffffff',
+                        textColor: '#303235',
+                        sendButtonColor: '#000F29',
+                        maxChars: 200,
+                        maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 200 characters.',
+                        autoFocus: true,
+                        sendMessageSound: true,
+                        sendSoundLocation: 'send_message.mp3',
+                        receiveMessageSound: true,
+                        receiveSoundLocation: 'receive_message.mp3'
+                    },
+                    feedback: {
+                        color: '#000F29',
+
+                    },
+                    dateTimeToggle: {
+                        date: true,
+                        time: true
+                    },
+                    footer: {
+                        textColor: '#919388',
+                        fontSize: 4,
+                        text: 'By Novatix | AI-generated content can contain mistakes |',
+                        company: 'Privacy Policy',
+                        companyLink: 'https://www.ehlgroup.com/en/privacy'
+                    }
+                }
+            }
         })
     </script>
 </body>
