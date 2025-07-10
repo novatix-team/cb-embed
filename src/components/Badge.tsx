@@ -18,11 +18,14 @@ export const Badge = (props: Props) => {
   // Set up markdown options
   Marked.setOptions({ isNoP: true, sanitize: false });
 
-  // Function to set up the markdown text with proper link styling
+    // Function to set up the markdown text with proper link styling
   const setMarkdownTextRef = (el: HTMLSpanElement) => {
     if (el) {
       const textContent = props.footer?.text ?? 'Powered by';
       el.innerHTML = Marked.parse(textContent);
+      
+      // Style the text color
+      el.style.color = props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor;
       
       // Style all links in the markdown text
       el.querySelectorAll('a').forEach((link) => {
@@ -62,10 +65,9 @@ export const Badge = (props: Props) => {
   return (
     <>
       <Show when={props.footer?.showFooter === undefined || props.footer?.showFooter === null || props.footer?.showFooter === true}>
-        <span
-          class="w-full text-center px-[10px] pt-[6px] pb-[10px] m-auto text-[13px]"
+        <div
+          class="w-full flex justify-between items-center px-[20px] pt-[6px] pb-[10px] m-auto text-[13px]"
           style={{
-            color: props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor,
             'background-color': props.badgeBackgroundColor ?? '#ffffff',
           }}
         >
@@ -78,15 +80,19 @@ export const Badge = (props: Props) => {
               rel="noopener noreferrer"
               class="lite-badge"
               id="lite-badge"
-              style={{ 'font-weight': 'bold', color: props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor }}
+              style={{ 
+                'font-weight': 'bold', 
+                color: props.footer?.companyTextColor ?? props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor,
+                'text-decoration': 'underline'
+              }}
             >
-              <span>&nbsp;{props.footer?.company}</span>
+              {props.footer?.company}
             </a>
           </Show>
-        </span>
+        </div>
       </Show>
-      <Show when={props.footer?.showFooter === false}>
-        <span
+              <Show when={props.footer?.showFooter === false}>
+        <div
           class="w-full text-center px-[10px] pt-[6px] pb-[10px] m-auto text-[13px]"
           style={{
             color: props.footer?.textColor ?? props.poweredByTextColor ?? defaultTextColor,

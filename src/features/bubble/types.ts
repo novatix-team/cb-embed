@@ -50,6 +50,7 @@ export type FooterTheme = {
   text?: string;
   company?: string;
   companyLink?: string;
+  companyTextColor?: string;
 };
 
 export type FeedbackTheme = {
