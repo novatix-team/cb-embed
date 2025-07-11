@@ -90,6 +90,8 @@ export type ButtonTheme = {
     right?: number;
     mobileBottom?: number;
     desktopBottom?: number;
+    mobileRight?: number;
+    desktopRight?: number;
     dragAndDrop?: boolean;
     autoWindowOpen?: autoWindowOpenTheme;
 };

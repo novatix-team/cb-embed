@@ -93,14 +93,15 @@
             theme: {
                 language: detectedLanguage, // Auto-detected from URL (/en, /fr, /de)
                 customCSS: "* { font-family: 'Open Sans', sans-serif; } \
-                [part='button'] { background-color: #FFFFFF !important; padding: 0px !important; width: 60px !important; height: 60px !important;} \
+                [part='button'] { background-color: #FFFFFF !important; padding: 0px !important; width: 60px !important; height: 60px !important; box-shadow: 0 8px 45px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2) !important;}  \
                 [part='bot'] { border-radius: 15px !important; overflow: hidden } \
                 [part='host-bubble'] , .chatbot-host-bubble { border-radius: 15px !important; overflow: hidden !important; } \
                 [part='user-message'], .chatbot-guest-bubble { border-radius: 15px !important; overflow: hidden !important; }", 
                 button: {
                     backgroundColor: '#F1F1EF',
-                    right: 10,
-                    mobileBottom: 60,   // Mobile positioning (avoids scroll arrow)
+                    mobileRight: 10,    // Mobile positioning (distance from right edge)
+                    desktopRight: 30,   // Desktop positioning (distance from right edge) 
+                    mobileBottom: 40,   // Mobile positioning (avoids scroll arrow)
                     desktopBottom: 20,  // Desktop positioning (symmetric corner)
                     size: 85,
                     dragAndDrop: false,

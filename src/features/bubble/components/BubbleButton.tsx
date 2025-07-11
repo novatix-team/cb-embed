@@ -37,9 +37,22 @@ export const BubbleButton = (props: Props) => {
     return baseBottom;
   };
 
+  // Responsive positioning: use different right values for mobile vs desktop
+  const getResponsiveRight = () => {
+    const isMobile = window.innerWidth <= 640;
+
+    // Use custom responsive values if provided
+    if (props.mobileRight !== undefined && props.desktopRight !== undefined) {
+      return isMobile ? props.mobileRight : props.desktopRight;
+    }
+
+    // Fallback to legacy right value for backward compatibility
+    return props.right ?? defaultRight;
+  };
+
   const [position, setPosition] = createSignal({
     bottom: getResponsiveBottom(),
-    right: props.right ?? defaultRight,
+    right: getResponsiveRight(),
   });
 
   const [isSmallScreen, setIsSmallScreen] = createSignal(false);
@@ -52,7 +65,7 @@ export const BubbleButton = (props: Props) => {
   const handleResize = () => {
     const newPosition = {
       bottom: getResponsiveBottom(),
-      right: position().right,
+      right: getResponsiveRight(),
     };
     setPosition(newPosition);
     props.setButtonPosition(newPosition);
@@ -69,7 +82,7 @@ export const BubbleButton = (props: Props) => {
     // Set initial position
     const initialPosition = {
       bottom: getResponsiveBottom(),
-      right: props.right ?? defaultRight,
+      right: getResponsiveRight(),
     };
     setPosition(initialPosition);
     props.setButtonPosition(initialPosition);
