@@ -1842,7 +1842,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             </div>
             <div
               ref={chatContainer}
-              class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[90px] mt-[50px] sm:mt-[50px] md:mt-[70px] relative scrollable-container chatbot-chat-view scroll-smooth"
+              class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[110px] sm:pt-[110px] md:pt-[115px] relative scrollable-container chatbot-chat-view scroll-smooth"
             >
               <For each={[...messages()]}>
                 {(message, index) => {
