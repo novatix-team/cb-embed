@@ -1819,7 +1819,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
           <div class="flex flex-col w-full h-full justify-start z-0">
             {/* AI disclaimer text - positioned below header, always visible */}
             <div
-              class="flex flex-row items-center w-full min-h-[20px] sm:min-h-[20px] md:min-h-[25px] absolute top-[50px] left-0 z-10"
+              class="flex flex-row items-center w-full min-h-[20px] sm:min-h-[20px] md:min-h-[25px] absolute top-[70px] left-0 z-10"
               style={{
                 background: props.backgroundColor || '#ffffff',
               }}
