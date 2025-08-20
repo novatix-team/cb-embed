@@ -1817,11 +1817,12 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             </div>
           ) : null}
           <div class="flex flex-col w-full h-full justify-start z-0">
-            {/* AI disclaimer text - positioned below header, always visible */}
+            {/* AI disclaimer text - now in normal document flow */}
             <div
-              class="flex flex-row items-center w-full min-h-[20px] sm:min-h-[20px] md:min-h-[25px] absolute top-[70px] left-0 z-10"
+              class="flex flex-row items-center w-full min-h-[20px] sm:min-h-[20px] md:min-h-[25px] relative bg-white border-b border-gray-100"
               style={{
                 background: props.backgroundColor || '#ffffff',
+                'margin-top': '50px', // Push down from title
               }}
             >
               <div class="w-full text-center px-3 py-1">
@@ -1842,7 +1843,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
             </div>
             <div
               ref={chatContainer}
-              class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[110px] sm:pt-[110px] md:pt-[115px] relative scrollable-container chatbot-chat-view scroll-smooth"
+              class="overflow-y-scroll flex flex-col flex-grow min-w-full w-full px-3 pt-[20px] relative scrollable-container chatbot-chat-view scroll-smooth"
             >
               <For each={[...messages()]}>
                 {(message, index) => {
