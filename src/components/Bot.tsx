@@ -1819,7 +1819,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
           <div class="flex flex-col w-full h-full justify-start z-0">
             {/* AI disclaimer text - now in normal document flow */}
             <div
-              class="flex flex-row items-center w-full min-h-[20px] sm:min-h-[20px] md:min-h-[25px] relative bg-white border-b border-gray-100"
+              class="flex flex-row items-center w-full min-h-[20px] sm:min-h-[20px] md:min-h-[25px] relative bg-white"
               style={{
                 background: props.backgroundColor || '#ffffff',
                 'margin-top': '50px', // Push down from title
