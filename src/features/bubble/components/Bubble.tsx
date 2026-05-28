@@ -6,6 +6,7 @@ import { Bot, BotProps } from '../../../components/Bot';
 import Tooltip from './Tooltip';
 import { getBubbleButtonSize } from '@/utils';
 import { detectLanguageFromURL, getTranslations } from '@/utils/i18n';
+import { dispatchChatbotClose, dispatchChatbotOpen } from '@/utils/chatbotEvents';
 
 const defaultButtonColor = '#3B81F6';
 const defaultIconColor = 'white';
@@ -27,11 +28,14 @@ export const Bubble = (props: BubbleProps) => {
   const translations = getTranslations(detectedLanguage);
 
   const openBot = () => {
+    const wasOpen = isBotOpened();
     if (!isBotStarted()) setIsBotStarted(true);
     setIsBotOpened(true);
+    if (!wasOpen) dispatchChatbotOpen(detectedLanguage);
   };
 
   const closeBot = () => {
+    if (isBotOpened()) dispatchChatbotClose(detectedLanguage);
     setIsBotOpened(false);
   };
 

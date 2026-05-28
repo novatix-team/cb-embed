@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot analytics local test</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem; }
+        #log { margin-top: 1rem; padding: 1rem; background: #f5f5f5; border-radius: 8px; max-height: 320px; overflow: auto; font-size: 13px; }
+        #log p { margin: 0 0 0.5rem; word-break: break-all; }
+        .hint { color: #555; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>Chatbot analytics test</h1>
+    <p class="hint">Local build: <code>npm run build</code> then <code>npm start</code> → open <code>/analytics-test.html</code></p>
+    <div id="log"></div>
+
+    <script>
+        localStorage.setItem('ehl_source', 'test_source');
+        localStorage.setItem('ehl_medium', 'test_medium');
+        localStorage.setItem('ehl_campaign', 'test_campaign');
+
+        window.dataLayer = window.dataLayer || [];
+        var originalPush = window.dataLayer.push.bind(window.dataLayer);
+        var logEl = document.getElementById('log');
+        window.dataLayer.push = function () {
+            var result = originalPush.apply(window.dataLayer, arguments);
+            var entry = arguments[0];
+            if (entry && entry.event && String(entry.event).indexOf('chatbot_') === 0) {
+                var p = document.createElement('p');
+                p.textContent = JSON.stringify(entry);
+                logEl.prepend(p);
+            }
+            return result;
+        };
+    </script>
+
+    <script type="module">
+        import Chatbot from './web.js';
+
+        function detectLanguageFromURL() {
+            const path = window.location.pathname.toLowerCase();
+            const segments = path.split('/').filter((s) => s.length > 0);
+            if (segments.length > 0) {
+                const first = segments[0];
+                if (first === 'fr') return 'fr';
+                if (first === 'de') return 'de';
+                if (first === 'en') return 'en';
+            }
+            return 'en';
+        }
+
+        const detectedLanguage = detectLanguageFromURL();
+
+        window.dataLayer = window.dataLayer || [];
+        let chatbotConversationId = null;
+        let lastProcessedMessageCount = 0;
+        const seenToolKeys = new Set();
+        let linkClickListenerSetup = false;
+
+        const TOOL_TO_EVENT = {
+            create_lead_with_email: 'chatbot_email_submit',
+            create_lead_with_phone: 'chatbot_phone_submit',
+            send_a_brochure: 'chatbot_brochure_get',
+        };
+
+        function getEhlVarsForFlowise() {
+            const vars = {};
+            const source = localStorage.getItem('ehl_source');
+            const medium = localStorage.getItem('ehl_medium');
+            const campaign = localStorage.getItem('ehl_campaign');
+            if (source) vars.ehl_source = source;
+            if (medium) vars.ehl_medium = medium;
+            if (campaign) vars.ehl_campaign = campaign;
+            return vars;
+        }
+
+        function getToolName(usedTool) {
+            if (!usedTool) return '';
+            return usedTool.tool || usedTool.toolName || usedTool.name || '';
+        }
+
+        function pushChatbotEvent(eventName, action, type, content) {
+            if (!chatbotConversationId) return;
+            window.dataLayer.push({
+                event: eventName,
+                chatbot_conversation_id: chatbotConversationId,
+                language: detectedLanguage,
+                action,
+                type,
+                content: content !== undefined ? content : null,
+            });
+        }
+
+        document.addEventListener('flowise-chatbot:open', () => {
+            chatbotConversationId = crypto.randomUUID();
+            lastProcessedMessageCount = 0;
+            seenToolKeys.clear();
+            pushChatbotEvent('chatbot_open_click', 'click', 'widget', null);
+        });
+
+        document.addEventListener('flowise-chatbot:close', () => {
+            if (!chatbotConversationId) return;
+            pushChatbotEvent('chatbot_close_click', 'click', 'widget', null);
+            chatbotConversationId = null;
+            lastProcessedMessageCount = 0;
+            seenToolKeys.clear();
+        });
+
+        function trackUsedTools(usedTools, messageIndex) {
+            if (!usedTools?.length) return;
+            usedTools.forEach((usedTool) => {
+                const toolName = getToolName(usedTool);
+                const eventName = TOOL_TO_EVENT[toolName];
+                if (!eventName) return;
+                const key = `${messageIndex}:${toolName}`;
+                if (seenToolKeys.has(key)) return;
+                seenToolKeys.add(key);
+                if (eventName === 'chatbot_email_submit') pushChatbotEvent(eventName, 'submit', 'email', null);
+                else if (eventName === 'chatbot_phone_submit') pushChatbotEvent(eventName, 'submit', 'phone', null);
+                else if (eventName === 'chatbot_brochure_get') pushChatbotEvent(eventName, 'get', 'brochure', null);
+            });
+        }
+
+        function observeMessagesForAnalytics(messages) {
+            if (!chatbotConversationId || !messages) return;
+            if (messages.length < lastProcessedMessageCount) {
+                lastProcessedMessageCount = 0;
+                seenToolKeys.clear();
+            }
+            for (let i = lastProcessedMessageCount; i < messages.length; i++) {
+                const msg = messages[i];
+                if (msg.type === 'userMessage') {
+                    pushChatbotEvent('chatbot_message_submit', 'submit', 'message', null);
+                } else if (msg.type === 'apiMessage' && i > 0) {
+                    pushChatbotEvent('chatbot_message_get', 'get', 'message', null);
+                    trackUsedTools(msg.usedTools, i);
+                }
+            }
+            if (messages.length > 0) {
+                const lastIndex = messages.length - 1;
+                const lastMsg = messages[lastIndex];
+                if (lastMsg.type === 'apiMessage' && lastIndex > 0) {
+                    trackUsedTools(lastMsg.usedTools, lastIndex);
+                }
+            }
+            lastProcessedMessageCount = messages.length;
+        }
+
+        function setupLinkClickListener() {
+            if (linkClickListenerSetup) return;
+            const shadowHost = document.querySelector('flowise-chatbot');
+            if (!shadowHost?.shadowRoot) return;
+            shadowHost.shadowRoot.addEventListener('click', (e) => {
+                const anchor = e.target.closest('a');
+                if (!anchor?.href) return;
+                pushChatbotEvent('chatbot_link_click', 'click', 'link', anchor.href);
+            });
+            linkClickListenerSetup = true;
+        }
+
+        Chatbot.init({
+            chatflowid: 'feaf8aae-2356-402b-8b83-0f7a99b31d9f',
+            apiHost: 'https://ehlchatbot.ehl.edu',
+            chatflowConfig: {
+                vars: {
+                    today_date: new Date().toLocaleDateString('en-GB', {
+                        weekday: 'long',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                    }),
+                    ...getEhlVarsForFlowise(),
+                },
+            },
+            observersConfig: {
+                observeMessages(messages) {
+                    setupLinkClickListener();
+                    observeMessagesForAnalytics(messages);
+                },
+            },
+            theme: {
+                language: detectedLanguage,
+                button: {
+                    backgroundColor: '#F1F1EF',
+                    size: 85,
+                    iconColor: '#000E24',
+                },
+                chatWindow: {
+                    title: 'EHL Digital Assistant (analytics test)',
+                    welcomeMessage: 'Hello! Analytics test mode.',
+                    renderHTML: true,
+                },
+            },
+        });
+    </script>
+</body>
+</html>
